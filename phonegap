@@ -1,0 +1,341 @@
+<!--Disclaimer:
+    1. This is code for Visual Studios 2015.
+    2. This is code that is used for Phonegap.
+    3. Background colour is white. And background colour can be used separately for each page. 
+-->
+<!DOCTYPE html> <!--Beginning of the program-->
+<html>
+<head>
+    <!--Beginning of Onsen Template Code-->
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- JS dependencies -->
+    <script src="scripts/appBundle.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+  
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css" />
+
+    <title>Plant Monitoring System</title> <!--Title of Program-->
+
+    <!--THE SIDEBAR-->
+    <script>
+            function openMenu() {
+                document.getElementById('mySplitter').left.open();
+            }
+            function loadPage(page) {                                    
+                var splitter = document.getElementById('mySplitter');
+                splitter.content.load(page).then(function() {
+                    splitter.left.close();
+                });
+            }
+    </script>
+    
+        <style>
+        ons-splitter-side .page__background {
+            background-color: forestgreen;         <!--Colour for the sidebar-->
+        }   
+        .menu-list,
+        .menu-item {
+            background-color: forestgreen;
+            background-image: none !important;
+            border-color: transparent;
+            color: #fff;
+            box-shadow: none !important;
+        }
+        .menu-list {
+            margin-top: 25px;
+        }
+        .menu-notification {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 14px;
+            height: 16px;
+            line-height: 16px;
+            min-width: 16px;
+            font-weight: 600;
+            margin-left: -3px;
+        }
+        .bottom-menu-list,
+        .bottom-menu-item:first-child,
+        .bottom-menu-item:last-child,
+        .bottom-menu-item {
+            border-color: #393939;
+            background-color: forestgreen;
+            background-image: none !important;
+            color: #ccc;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+
+<!--Disclaimer: 
+    1. Graph works on the computer
+    2. Sometimes it lags and doesn't show in the app- instead there is white space.
+    3. Any other code for graphs can be used, which is about a dozen or a few dozens of different variations. 
+    
+    BEGINNING OfcCode for chart:-->
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Time', 'Temperature', 'Moisture', 'Light'],
+          ['3:30',  19,      0,     45],
+          ['4:35',  11,      19,    34],       
+          ['5:40',  30,      34,    38],
+          ['6:45',  25,      39,    25]
+        ]);
+        var options = {
+          title: '',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+       chart.draw(data, options);
+      }
+    </script>
+</head>
+<body>
+    <div id="curve_chart" style="width: 300px; height: 50px"></div> <!--Any Width or Height can be used-->
+</body>
+
+<!--ENDING OF CHART-->
+
+ <!--Beginning of THE SIDEBAR-->
+
+<body>
+    <!-- Cordova reference -->
+    <script src="cordova.js"></script>
+    <script src="scripts/index.js"></script>
+    <!-- -->
+
+    <ons-splitter id="mySplitter">
+        <ons-splitter-side side="left" width="220px" collapse swipeable>       <!--Sidebar Menu List-->
+            <ons-page>
+                <ons-list class="menu-list">
+
+                    <!--Code for first three pages-->
+                    <ons-list-item class="longdivider menu-item" tappable tap-background-color="555" onclick="loadPage('results.html')">   <!--Address for Results page-->
+                        <div class="left">
+                                <ons-icon icon="fa-save" class="list__item__icon"></ons-icon> <!--Code for the sidebar icon for the Results page-->
+                            </div>
+                            Results <!--Creating the page for Plants-->
+                    </ons-list-item>
+
+                    <ons-list-item class="longdivider menu-item" tappable tap-background-color="#555" onclick="loadPage('plants.html')"> <!--Address for Plants page-->
+                        <div class="left">
+                            <ons-icon icon="fa-pagelines" class="list__item__icon"></ons-icon> <!--Code for the sidebar icon for the Plants page-->
+                        </div>
+                        Plants <!--Creating the page for Results-->
+                    </ons-list-item>
+
+                    <ons-list-item class="longdivider menu-item" tappable tap-background-color="#555" onclick="loadPage('instructions.html')"> <!--Address for Instructions page-->
+                        <div class="left">
+                            <ons-icon icon="fa-copy" class="list__item__icon"></ons-icon> <!--Code for the sidebar icon for the Instructions page-->
+                        </div>
+                        Instructions <!--Creating the page for Instructions-->
+                    </ons-list-item>
+                </ons-list>
+
+                <br>
+
+                <!--Code for last three pages-->
+                <ons-list class="bottom-menu-list">  
+                    <ons-list-item class="longdivider bottom-menu-item" tappable tap-background-color="#555" onclick="loadPage('home.html')"> <!--Address for Home page-->
+                        Home <!--Creating the page for Home-->
+                                                                <div class="notification menu-notification">3</div> <!--Can be used to show notification/ In this example, it shows 3-->
+                    </ons-list-item>
+                    <ons-list-item class="longdivider bottom-menu-item" tappable tap-background-color="#555" onclick="loadPage('waitingarea.html')"> <!--Address for Waiting page-->
+                        Waiting Area <!--Creating the page for Waiting Area-->
+                    </ons-list-item>
+                    <ons-list-item class="longdivider bottom-menu-item" tappable tap-background-color="#555" onclick="loadPage('creators.html')"> <!--Address for Creators page-->
+                        Creators <!--Creating the page for Extra-->
+                    </ons-list-item>
+                </ons-list>
+            </ons-page>
+        </ons-splitter-side>
+        <ons-splitter-content page="home.html"></ons-splitter-content>
+    </ons-splitter>
+
+    <!--Ending of THE SIDEBAR-->
+
+    <!--Home/Menu Page-->
+    <ons-template id="home.html"> <!--Code for Home Page/Menu -->
+        <ons-page class="red"> <!--Beginning Code for Menu Page/ Here is where the code can be written that which show up on the page-->
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button onclick="openMenu()">
+                        <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center"> <!--Puts the name and button in the center-->
+                    Plant Monitoring System
+                </div>
+            </ons-toolbar>
+            <!--Continuing-->
+            <ons-row style="margin-top: 100px; text-align: center;">
+                <ons-col>                                  <!--Code for button-->
+                    <ons-button modifier="light" onclick="openMenu()">
+                     Menu 
+                    </ons-button>
+                    <p style="color: #999; font-size: 30px;">  </p>
+                    <img src="http://preventioncdnndg.org/eco-quartier/wp-content/uploads/sites/3/2015/09/tree.jpg" width="400" height="400"> <!--Image that is in the middle of the page/ Any image can be used-->
+                </ons-col>
+            </ons-row>
+        </ons-page> <!--Ending Code for Menu Page-->
+    </ons-template>
+  
+    <!--Results Page-->
+    <ons-template id="results.html">
+        <ons-page>
+            <div class="background"></div> 
+            <style>    div.page__background {
+            background: transparent;
+        }</style>       
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button onclick="openMenu()">
+                        <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    Results <!--Name for the page that is situated on the top-->
+                </div>
+            </ons-toolbar>
+            <!--Beginning Code for the Results page/ Here is where the code can be written that which show up on the page-->
+            <ons-page>
+
+            </ons-page>
+            <!--Ending Code for the Results page-->
+            </ons-page>
+</ons-template>
+
+    <!--Instructions Page-->
+    <ons-template id="instructions.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button onclick="openMenu()">
+                        <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    Instructions <!--Name for the page that is situated on the top-->
+                </div>
+            </ons-toolbar>
+            <!--Beginning Code for the Instructions page/ Here is where the code can be written that which show up on the page-->
+            <ons-page>
+                <p>1. "Plants" is the database for all the plants where you can get the information you need for them.</p> <!--Use a plugin for this/use icons/make it cool-->
+                <p>2. "Results" is where the you can see the statistics for the plant.</p>
+                <p>3. "Instructions" is where you can find out how to use the app. </p>
+                <p>4. "Home" is the Main Menu.</p>
+                <p>5. "Waiting Area" is where you can find out about interesting facts while waiting for the statistics to load.</p>
+                <img src="https://www.hygiena.com/images/images_j25/industries/Health_care/Health_Care_home/instructions.png" width="200" height="200"> <!--Image that is in the middle of the page/ Any image can be used-->
+            </ons-page>
+            <!--Ending Code for the Instructions page-->
+        </ons-page>
+    </ons-template>
+
+    <!--Plants Page-->
+    <ons-template id="plants.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button onclick="openMenu()">
+                        <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    Plants <!--Name for the page that is situated on the top-->
+                </div>
+            </ons-toolbar>
+            <!-- Beginning Code for the PLants page/ Here is where the code can be written that which show up on the page-->
+            <ons-page>
+                
+                <!--JavaScript Alert lets the user press the name for the plant and the statistics for the plant will show up as an alert in a grey box-->
+                <p> 1.     <a href="javascript:alert('Temperature: 13 - 27°C;     Light: High;     Water: Moderately dry soil;     Humidity: Low;');">Aloe Vera</a> </p>
+                <img src="https://png.pngtree.com/element_origin_min_pic/17/03/02/6da2d96675c679e013447b8c13deeaed.jpg" width="90" height="90"> <!--Image for Aloe Vera/ All the other images are for the other plants/ Width and Height can be changed for each image-->
+                <p>   2.  <a href="javascript:alert('Temperature: 18 - 25°C;     Light: Med-high;     Water: Evenly moist soil;     Humidity: Average;');">Rose</a> </p>
+                <img src="https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Roses-PNG/Red_Rose_Bush_PNG_Clipart_Picture.png?m=1436151301" width="90" height="90">
+                <p> 3. <a href="javascript:alert('Temperature: 20 - 27°C;     Light: High;     Water: Evenly moist soil;     Humidity: High;');">Tomato </a> </p>
+                <img src="https://pre00.deviantart.net/54b7/th/pre/i/2017/128/9/9/tomato_plant_png_by_dinowcookie-db8l6kq.png" width="90" height="90">
+                <p>   4. <a href="javascript:alert('Temperature: 18 - 24°C;     Med-high;     Water: Evenly moist soil;     Humidity: Average;');"> Spider Plant </a> </p>
+                <img src="https://gardensouq.com/wp-content/uploads/2018/03/spider-plant.png" width="90" height="90">
+                <p> 5.  <a href="javascript:alert('Temperature: 26 - 30°C;     Light: Low-high;     Water: Moderately dry soil;     Humidity: Average;');">Snake Plant</a> </p>
+                <img src="https://mashtalegypt.com/wp-content/uploads/2017/05/snake-plant-4.png" width="90" height="90">
+                <p>   6.  <a href="javascript:alert('Temperature: 13 - 21°C;     Light: Med-high;     Water: Evenly moist soil;     Humidity: Average- High;');">English Ivy </a> </p>
+                <img src="https://images-na.ssl-images-amazon.com/images/I/81fj6CzUEUL._SL1500_.jpg" width="90" height="90">
+                <p> 7.<a href="javascript:alert('Temperature: 7 - 30°C;     Light: Low;     Water: Evenly moist soil;     Humidity: Average;');"> Cast Iron Plant </a> </p>
+                <img src="http://www.houseplantsguru.com/wp-content/uploads/2010/07/aspidistra.jpg" width="90" height="90">
+                <p>   8.  <a href="javascript:alert('Temperature: 13 - 16°C;     Light: High;     Water: Evenly moist soil;     Humidity: Average;');">Sunflower </a> </p>
+                <img src="http://www.pngall.com/wp-content/uploads/2016/04/Sunflowers-Free-Download-PNG.png" width="90" height="90">
+                <p> 9.  <a href="javascript:alert('Temperature: 15 - 21°C;     Light: High;     Water: Moderately dry soil;     Humidity: Average;');">Dill Plant</a> </p>
+                <img src="http://photo-dict.faqs.org/photofiles/list/3772/5082dill.jpg" width="90" height="90">              
+            </ons-page>
+            <!--Ending Code for the Plants page-->
+        </ons-page>
+    </ons-template>
+ 
+    <!--Waiting Area Page-->
+    <ons-template id="waitingarea.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button onclick="openMenu()">
+                        <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    Waiting Area <!--Name for the page that is situated on the top-->
+                </div>
+            </ons-toolbar>
+            <!--Code for the Waiting Area page/ Here is where the code can be written that which show up on the page-->
+            <ons-page>
+                <p>Interesting fact #1: An average size tree can provide enough wood to make 170,100 pencils.</p>
+                <p>Interesting fact #2: The Amazon rainforest produces half the world’s oxygen supply.</p>
+                <p>Interesting fact #3: An apple is 25% air. </p>
+                <p>Interesting fact #4: Strawberry is the only fruit that bears its seeds on the outside.</p>
+                <p>Interesting fact #5: Cabbage has 91% water content. </p>
+                <img src="http://www.freepngimg.com/download/vegetable/4-2-vegetable-picture.png" width="300" height="260"> <!--Image that is in the middle of the page/ Any image can be used-->
+            </ons-page>
+            <!--Code for the Waiting Area page-->
+        </ons-page>
+    </ons-template>
+   
+    <!--Creators Page-->
+    <ons-template id="creators.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button onclick="openMenu()">
+                        <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    Creators <!--Name for the page that is situated on the top of the page/ Can be changed to any word in the dictionary-->
+                </div>
+            </ons-toolbar>  
+            <!--Beginning Code for the Creators page/ Here is where the code can be written that which show up on the page-->
+            <ons-page>                           
+                <p>Here are the minds behind the project: </p> <!--Every word here can be changed and is posted exactly on the page-->
+                <p>Leonardo: </p>
+                <img src="" width="150" height="150">  <!--Image of the creator can be used with any width or height-->
+                <p>Michaelangelo: </p>
+                <img src="" width="150" height="150"> <!--Image of the creator can be used with any width or height-->
+                <p>Raphael: </p>
+                <img src="" width="150" height="150"> <!--Image of the creator can be used with any width or height-->
+                <p>Donatello : </p>
+                <img src="" width="150" height="150"> <!--Image of the creator can be used with any width or height-->
+            </ons-page>
+            <!--Ending Code for the Creators page-->
+        </ons-page>
+    </ons-template>
+
+</body>
+</html> <!--Ending of the program-->
